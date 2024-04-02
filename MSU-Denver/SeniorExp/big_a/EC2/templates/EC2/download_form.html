@@ -1,0 +1,15 @@
+<!-- EC2/templates/EC2/download_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download YAML File</title>
+</head>
+<body>
+    <h1>Generate YAML File</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Download YAML</button>
+    </form>
+</body>
+</html>

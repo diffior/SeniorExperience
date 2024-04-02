@@ -21,8 +21,10 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('inventory/', include('inventory.urls')),
-
+    path('EC2/', include('EC2.urls')),
 ]
+
+
 
 
 

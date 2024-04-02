@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'inventory',
     'rest_framework',
     'corsheaders',
+    'yaml',
+    'EC2',
 ]
 
 MIDDLEWARE = [
