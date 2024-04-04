@@ -8,4 +8,6 @@ urlpatterns = [
     path('<int:pk>/', ec2_instance_detail, name='inventory-detail'),
     path('download-yaml/', download_yaml, name='download_yaml'),
     path('ec2/download/<int:pk>/', download_ec2_instance, name='download_ec2_instance'),
+    path('download/<int:pk>/', download_ec2_instance, name='download-ec2-instance'), #this is the url for the download button
+    
 ]

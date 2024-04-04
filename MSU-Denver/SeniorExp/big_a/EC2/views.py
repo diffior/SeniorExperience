@@ -1,3 +1,6 @@
+import yaml
+from rest_framework.decorators import api_view
+from rest_framework import status
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
@@ -8,8 +11,9 @@ from .serializers import EC2Serializer  # Adjust this import to match your seria
 from .forms import SaveYAMLForm
 from django.shortcuts import render
 from .forms import SaveYAMLForm
-import yaml
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+
 
 
 @api_view(['GET', 'POST'])
@@ -71,17 +75,16 @@ def download_yaml(request):
 
 api_view(['GET'])
 def download_ec2_instance(request, pk):
-    try:
-        instance = EC2Instance.objects.get(pk=pk)
-        # Assume `instance_data` is a dictionary containing the data you want to include in the YAML file
-        instance_data = {
-            "name": instance.name,
-            "description": instance.description,
-            # include other fields as necessary
-        }
-        yaml_content = yaml.dump(instance_data)
-        response = HttpResponse(yaml_content, content_type="application/x-yaml")
-        response['Content-Disposition'] = f'attachment; filename="ec2_instance_{pk}.yaml"'
-        return response
-    except EC2Instance.DoesNotExist:
-        return HttpResponse(status=404)
+    # Get the EC2Instance object or return a 404 if not found
+    instance = get_object_or_404(EC2Instance, pk=pk)
+    
+    # Generate the YAML configuration using the to_ansible_playbook method
+    yaml_content = instance.to_ansible_playbook()
+    
+    # Create an HttpResponse object with the YAML content
+    response = HttpResponse(yaml_content, content_type="application/x-yaml")
+    # Set the Content-Disposition header to prompt a download
+    response['Content-Disposition'] = f'attachment; filename="ec2_instance_{pk}.yaml"'
+    
+    return response
+

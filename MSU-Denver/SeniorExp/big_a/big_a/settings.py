@@ -33,6 +33,17 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 3000)],  # Update this if your Redis server is running elsewhere
+        },
+    },
+}
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,7 +59,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'yaml',
     'EC2',
+    
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
