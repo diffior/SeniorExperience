@@ -11,6 +11,7 @@ urlpatterns = [
     path('inventory/<int:pk>/', views.inventory_detail, name='inventory-detail'),
     path('', views.inventory_list, name='inventory-list'),
     path('<int:pk>/', views.inventory_detail, name='inventory-detail'),
+    path('download/inventory/<int:pk>/', views.download_inventory, name='download_inventory'),
      
 ]
 

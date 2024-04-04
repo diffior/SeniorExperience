@@ -6,6 +6,10 @@ from rest_framework import status
 from .models import Inventory
 from .serializers import InventorySerializer
 from rest_framework.response import Response
+from django.http import HttpResponse
+from rest_framework.decorators import api_view
+from .models import Inventory
+from django.shortcuts import get_object_or_404
 
 
 @api_view(['GET', 'POST'])
@@ -53,5 +57,19 @@ def inventory_detail(request, pk):
     elif request.method == 'DELETE':
         item.delete()
         return Response({'message': 'Inventory was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def download_inventory(request, pk):
+    inventory = get_object_or_404(Inventory, pk=pk)
+    
+    # Generate the INI content using the to_ini method
+    ini_content = inventory.to_ini()
+    
+    # Create an HttpResponse object with the INI content
+    response = HttpResponse(ini_content, content_type="text/plain")
+    # Set the Content-Disposition header to prompt a download
+    response['Content-Disposition'] = f'attachment; filename="inventory_{pk}.ini"'
+    
+    return response
 
 
