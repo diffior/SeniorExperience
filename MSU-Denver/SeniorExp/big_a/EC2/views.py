@@ -87,4 +87,3 @@ def download_ec2_instance(request, pk):
     response['Content-Disposition'] = f'attachment; filename="ec2_instance_{pk}.yaml"'
     
     return response
-
