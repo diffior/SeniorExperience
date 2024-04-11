@@ -63,27 +63,33 @@ def download_yaml(request):
     if request.method == 'POST':
         form = SaveYAMLForm(request.POST)
         if form.is_valid():
-            # Process the form and return a downloadable YAML response
-            # (see previous instructions for generating and returning the YAML file)
-            pass  # Placeholder for your YAML generation and response logic
+            pass 
     else:
         form = SaveYAMLForm()
 
-    # Specify the path to your template:
-    # Adjust 'EC2/download_form.html' if your app or template is named differently
     return render(request, 'EC2/download_form.html', {'form': form})
 
-api_view(['GET'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def download_ec2_instance(request, pk):
-    # Get the EC2Instance object or return a 404 if not found
+    """
+    Retrieve, update, or delete an EC2Instance.
+    """
     instance = get_object_or_404(EC2Instance, pk=pk)
-    
-    # Generate the YAML configuration using the to_ansible_playbook method
-    yaml_content = instance.to_ansible_playbook()
-    
-    # Create an HttpResponse object with the YAML content
-    response = HttpResponse(yaml_content, content_type="application/x-yaml")
-    # Set the Content-Disposition header to prompt a download
-    response['Content-Disposition'] = f'attachment; filename="ec2_instance_{pk}.yaml"'
-    
-    return response
+
+    if request.method == 'GET':
+        yaml_content = instance.to_ansible_playbook()
+        response = HttpResponse(yaml_content, content_type="application/x-yaml")
+        response['Content-Disposition'] = f'attachment; filename="ec2_instance_{pk}.yaml"'
+        return response
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = EC2Serializer(instance, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        instance.delete()
+        return JsonResponse({'message': 'EC2Instance was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
