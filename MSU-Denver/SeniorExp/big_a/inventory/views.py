@@ -58,18 +58,37 @@ def inventory_detail(request, pk):
         item.delete()
         return Response({'message': 'Inventory was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def download_inventory(request, pk):
     inventory = get_object_or_404(Inventory, pk=pk)
-    
-    # Generate the INI content using the to_ini method
     ini_content = inventory.to_ini()
-    
-    # Create an HttpResponse object with the INI content
     response = HttpResponse(ini_content, content_type="text/plain")
-    # Set the Content-Disposition header to prompt a download
     response['Content-Disposition'] = f'attachment; filename="inventory_{pk}.ini"'
     
     return response
 
 
+@api_view(['GET', 'PUT', 'DELETE'])
+def download_inventory(request, pk):
+    """
+    Retrieve, update, or delete an inventory item.
+    """
+    inventory = get_object_or_404(Inventory, pk=pk)
+
+    if request.method == 'GET':
+        ini_content = inventory.to_ini()
+        response = HttpResponse(ini_content, content_type="text/plain")
+        response['Content-Disposition'] = f'attachment; filename="inventory_{pk}.ini"'
+        return response
+
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = InventorySerializer(inventory, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        inventory.delete()
+        return JsonResponse({'message': 'Inventory was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
