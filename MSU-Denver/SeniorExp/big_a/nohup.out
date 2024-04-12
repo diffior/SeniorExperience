@@ -1,0 +1,41 @@
+./start_gunicorn.sh: line 2: /MSU-Denver/SeniorExp/myprojectenv/bin/activate: No such file or directory
+[2024-04-11 18:05:05 -0600] [45852] [INFO] Starting gunicorn 21.2.0
+[2024-04-11 18:05:05 -0600] [45852] [INFO] Listening at: http://0.0.0.0:8000 (45852)
+[2024-04-11 18:05:05 -0600] [45852] [INFO] Using worker: sync
+[2024-04-11 18:05:05 -0600] [45854] [INFO] Booting worker with pid: 45854
+[2024-04-11 18:05:05 -0600] [45854] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/Users/chrii/Desktop/MSU-Denver/SeniorExp/myprojectenv/lib/python3.12/site-packages/gunicorn/arbiter.py", line 609, in spawn_worker
+    worker.init_process()
+  File "/Users/chrii/Desktop/MSU-Denver/SeniorExp/myprojectenv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 134, in init_process
+    self.load_wsgi()
+  File "/Users/chrii/Desktop/MSU-Denver/SeniorExp/myprojectenv/lib/python3.12/site-packages/gunicorn/workers/base.py", line 146, in load_wsgi
+    self.wsgi = self.app.wsgi()
+                ^^^^^^^^^^^^^^^
+  File "/Users/chrii/Desktop/MSU-Denver/SeniorExp/myprojectenv/lib/python3.12/site-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+                    ^^^^^^^^^^^
+  File "/Users/chrii/Desktop/MSU-Denver/SeniorExp/myprojectenv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 58, in load
+    return self.load_wsgiapp()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrii/Desktop/MSU-Denver/SeniorExp/myprojectenv/lib/python3.12/site-packages/gunicorn/app/wsgiapp.py", line 48, in load_wsgiapp
+    return util.import_app(self.app_uri)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chrii/Desktop/MSU-Denver/SeniorExp/myprojectenv/lib/python3.12/site-packages/gunicorn/util.py", line 371, in import_app
+    mod = importlib.import_module(module)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.2_1/Frameworks/Python.framework/Versions/3.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1310, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'your_project_name'
+[2024-04-11 18:05:05 -0600] [45854] [INFO] Worker exiting (pid: 45854)
+[2024-04-11 18:05:05 -0600] [45852] [ERROR] Worker (pid:45854) exited with code 3
+[2024-04-11 18:05:05 -0600] [45852] [ERROR] Shutting down: Master
+[2024-04-11 18:05:05 -0600] [45852] [ERROR] Reason: Worker failed to boot.

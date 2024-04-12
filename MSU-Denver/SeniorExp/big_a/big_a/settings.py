@@ -27,11 +27,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOW_ALL_ORIGINS = True  # For development only; specify domains in production
+CORS_ALLOWED_ORIGINS = [
+    'https://joshhklee.github.io',
+]
+
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
     'http://localhost:3000',
-    # 'https://joshhklee.github.io/',
 )
 
 
@@ -63,6 +67,7 @@ INSTALLED_APPS = [
     'EC2',
     
 ]
+
 
 
 MIDDLEWARE = [
@@ -144,11 +149,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/MSU-Denver/SeniorExp/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
