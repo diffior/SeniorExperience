@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'yaml',
     'EC2',
+    'input_valid',
     
 ]
 
