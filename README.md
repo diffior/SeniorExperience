@@ -25,7 +25,7 @@ Big A is a Senior Experience project developed by Christian Campbell, Joshua Lee
 - Given a basic template of an EC2 playbook.
 - Generates a personal inventory file for users and hostfiles.
 - Ability to run on Nginx and Gunicorn, enhancing server persistence, scalability, and elasticity.
-- Hosted on pythonanywhere
+- Hosted on diffior.pythonanywhere.com (Expires July-19-2024)
 
 ## Prerequisites
 - Python 3.12.3 or newer 
