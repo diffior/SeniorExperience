@@ -16,5 +16,13 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "big_a.settings")
 
+path = '/var/www/diffior_pythonanywhere_com_wsgi.py'
+if path not in sys.path:
+    sys.path.append(path)
+
+os.environ['big_a.settings'] = 'mysite.settings'
+
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
 
 application = get_wsgi_application()
